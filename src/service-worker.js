@@ -72,13 +72,13 @@ self.addEventListener('message', (event) => {
 // Any other custom service worker logic can go here.
 
 self.addEventListener('push', (event) => {
-  const data = event.data.json();
+  const data = event.data ? event.data.json() : {};
   const options = {
-      body: data.body,
-      icon: '/icon.png',
-      badge: '/badge.png'
+    body: data.body,
+    icon: `${process.env.PUBLIC_URL}/logo192.png`, // React標準のアイコンに置き換え
+    badge: `${process.env.PUBLIC_URL}/logo192.png`, // 同様にbadgeも変更
   };
   event.waitUntil(
-      self.registration.showNotification(data.title, options)
+    self.registration.showNotification(data.title, options)
   );
 });
